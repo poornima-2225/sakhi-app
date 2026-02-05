@@ -23,10 +23,10 @@ community for women.
 - Mood Check-In (Mental Wellness)
 
 ## Design
-Figma Prototype: (PASTE YOUR FIGMA LINK HERE)
+Figma Prototype: https://www.figma.com/make/7KBjb9ViOhCVaRPDo16hZI/SAKHI--App-Design?fullscreen=1&t=AsPeWtVc7L6KNbgH-1
 
 ## Documentation
-Project Documentation: (PASTE YOUR DOC LINK HERE)
+Project Documentation: https://docs.google.com/document/d/11F84qiEW9Jt3f5KGK1qTGFstG9yEATkc9-VAhoF_DX0/edit?usp=sharing
 
 ## Tech Stack
 - Design: Figma
