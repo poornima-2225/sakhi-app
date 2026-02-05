@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKHI+ | Digital Companion for Health, Safety & Growth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #8a2be2;
+            --primary-light: #a855f7;
+            --secondary: #f72585;
+            --accent: #06d6a0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --danger: #e63946;
+            --success: #2a9d8f;
+            --warning: #f4a261;
+            --info: #4cc9f0;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #05b389;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: none;
+            min-height: calc(100vh - 180px);
+            padding: 30px 0;
+        }
+
+        .main-content.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(138, 43, 226, 0.9), rgba(168, 85, 247, 0.8)), url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-tagline {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+
+        .hero-tagline span {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Dashboard Cards */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(138, 43, 226, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Health Hub */
+        .health-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .wellness-list {
+            list-style: none;
+        }
+
+        .wellness-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .wellness-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* AI Assistant */
+        .ai-chat {
+            background-color: #f0f4f8;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 150px;
+        }
+
+        .ai-response {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .ai-features {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .ai-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 30px;
+            border: 1px solid var(--light-gray);
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+
+        /* SOS Section */
+        .sos-button {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .sos-button:hover {
+            background-color: #c1121f;
+            transform: scale(1.02);
+        }
+
+        .helplines {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .helplines li {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .safety-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .safety-option {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .safety-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Career Section */
+        .mentor-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .mentor-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .mentor-category {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .courses {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .course-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-suggestion {
+            background-color: rgba(6, 214, 160, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        /* Community */
+        .post-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .post-form textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--light-gray);
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 8px 20px;
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .category-tab.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .community-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--gray);
+        }
+
+        .post-category {
+            background-color: rgba(138, 43, 226, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .post-action:hover {
+            color: var(--primary);
+        }
+
+        /* Mood Tracker */
+        .mood-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .mood-option {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .mood-option:hover {
+            transform: scale(1.1);
+        }
+
+        .mood-option.selected {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.2);
+            border: 3px solid var(--primary);
+        }
+
+        .mood-emoji {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .mood-chart {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+        }
+
+        .mood-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .day-emoji {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        /* Profile */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .profile-menu {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .menu-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: var(--light-gray);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Login Page */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 20px;
+        }
+
+        .auth-box {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--light-gray);
+            font-size: 1rem;
+        }
+
+        .auth-options {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .mood-options {
+                gap: 10px;
+            }
+            
+            .mood-option {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Screens -->
+    <div id="auth-screens">
+        <!-- Landing Screen -->
+        <div id="landing-screen" class="auth-container">
+            <div class="auth-box">
+                <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                    <i class="fas fa-heart-circle-check"></i>
+                    <span>SAKHI+</span>
+                </div>
+                <h2>Your digital companion for health, safety & growth</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: var(--gray);">
+                    Inclusive · Secure · Supportive
+                </p>
+                <button id="get-started-btn" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
+                    Get Started
+                </button>
+                <div style="text-align: center;">
+                    <p>Already have an account? <a href="#" id="go-to-login" class="auth-link">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="auth-container" style="display: none;">
+            <div class="auth-box">
+                <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                    <i class="fas fa-heart-circle-check"></i>
+                    <span>SAKHI+</span>
+                </div>
+                <h2>Welcome to SAKHI+</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: var(--gray);">
+                    Sign in to continue your journey
+                </p>
+                
+                <div class="form-group">
+                    <label for="email">Email / Phone</label>
+                    <input type="text" id="email" class="form-control" placeholder="Enter your email or phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password">
+                </div>
+                
+                <button id="login-btn" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
+                    Login
+                </button>
+                
+                <div class="auth-options">
+                    <p>New here? <a href="#" id="go-to-signup" class="auth-link">Sign up</a></p>
+                    <p>Or <a href="#" id="continue-guest" class="auth-link">Continue as Guest</a></p>
+                    <p><a href="#" id="back-to-landing" class="auth-link">← Back to Home</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (Initially Hidden) -->
+    <div id="main-app" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-heart-circle-check"></i>
+                    <span>SAKHI+</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="dashboard"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="community"><i class="fas fa-users"></i> Community</a></li>
+                        <li><a href="#" class="nav-link" data-page="sos"><i class="fas fa-bell"></i> SOS</a></li>
+                        <li><a href="#" class="nav-link" data-page="profile"><i class="fas fa-user"></i> Profile</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-actions">
+                    <button id="logout-btn" class="btn btn-outline">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Sections -->
+        <div class="container">
+            <!-- Dashboard -->
+            <section id="dashboard" class="main-content active">
+                <div class="hero">
+                    <h1>Hello 👋</h1>
+                    <p>How can we support you today?</p>
+                    
+                    <div class="dashboard">
+                        <div class="card" data-page="health">
+                            <div class="card-header">
+                                <h3 class="card-title">Health Hub</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                            </div>
+                            <p>Menstrual • Mental • Wellness</p>
+                        </div>
+                        
+                        <div class="card" data-page="ai-assistant">
+                            <div class="card-header">
+                                <h3 class="card-title">AI Health Assistant</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                            </div>
+                            <p>Ask health-related questions</p>
+                        </div>
+                        
+                        <div class="card" data-page="sos">
+                            <div class="card-header">
+                                <h3 class="card-title">Safety & SOS</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                            </div>
+                            <p>Emergency help & legal support</p>
+                        </div>
+                        
+                        <div class="card" data-page="career">
+                            <div class="card-header">
+                                <h3 class="card-title">Career & Education</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                            </div>
+                            <p>Mentors • Jobs • Skills</p>
+                        </div>
+                        
+                        <div class="card" data-page="community">
+                            <div class="card-header">
+                                <h3 class="card-title">Community</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                            </div>
+                            <p>Share • Support • Connect</p>
+                        </div>
+                        
+                        <div class="card" data-page="mood">
+                            <div class="card-header">
+                                <h3 class="card-title">Mood Check-In</h3>
+                                <div class="card-icon">
+                                    <i class="fas fa-smile"></i>
+                                </div>
+                            </div>
+                            <p>Mental wellness support</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Health Hub -->
+            <section id="health" class="main-content">
+                <h1>Women's Health Hub</h1>
+                <p style="margin-bottom: 30px; color: var(--gray);">Your wellness journey</p>
+                
+                <div class="card">
+                    <h2 style="margin-bottom: 20px;">Menstrual Tracker</h2>
+                    <p style="margin-bottom: 20px;">Track your cycle & symptoms</p>
+                    
+                    <div class="health-stats">
+                        <div class="stat-box">
+                            <div class="stat-label">Last period date:</div>
+                            <div class="stat-value" id="last-period">Jan 20, 2026</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <div class="stat-label">Cycle length:</div>
+                            <div class="stat-value" id="cycle-length">28 days</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <div class="stat-label">Next expected:</div>
+                            <div class="stat-value" id="next-period">Feb 17, 2026</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Track Now</button>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h2 style="margin-bottom: 20px;">Mental Wellness</h2>
+                    <p style="margin-bottom: 20px;">Mindfulness & stress relief</p>
+                    
+                    <ul class="wellness-list">
+                        <li><i class="fas fa-thumbtack"></i> <strong>Stress Management</strong> - 5 min guided relaxation</li>
+                        <li><i class="fas fa-dumbbell"></i> <strong>Breathing Exercise</strong> - 3 min deep breathing</li>
+                        <li><i class="fas fa-pills"></i> <strong>Daily Affirmation</strong> - "I am strong and capable"</li>
+                    </ul>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h2 style="margin-bottom: 20px;">Health Articles</h2>
+                    <p>Coming soon...</p>
+                </div>
+            </section>
+
+            <!-- AI Assistant -->
+            <section id="ai-assistant" class="main-content">
+                <h1>AI Health Assistant</h1>
+                <p style="margin-bottom: 30px; color: var(--gray);">AI-powered · Safe · Non-diagnostic</p>
+                
+                <div class="card">
+                    <div class="ai-chat">
+                        <h3>AI Assistant</h3>
+                        <div class="ai-response" id="ai-response">
+                            This is common. Try breathing exercises, light stretching, and hydration. If symptoms continue, consult a healthcare professional.
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px;">How I can help</h3>
+                    <ul class="ai-features">
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Answer health-related questions</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Provide wellness tips and guidance</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Suggest when to seek professional help</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> Support your mental health journey</li>
+                    </ul>
+                    
+                    <input type="text" class="question-input" id="health-question" placeholder="Ask your health question...">
+                    <button id="ask-ai-btn" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Ask AI Assistant</button>
+                </div>
+            </section>
+
+            <!-- SOS -->
+            <section id="sos" class="main-content">
+                <h1>Safety & SOS</h1>
+                <p style="margin-bottom: 30px; color: var(--gray);">Emergency support & resources</p>
+                
+                <button class="sos-button" id="sos-emergency">
+                    <i class="fas fa-bell"></i> SOS – Get Help Now
+                </button>
+                <p style="text-align: center; margin-bottom: 30px; font-size: 0.9rem;">
+                    Emergency services will be contacted immediately
+                </p>
+                
+                <div class="card">
+                    <h2 style="margin-bottom: 20px;">Emergency Helplines</h2>
+                    <ul class="helplines">
+                        <li>Women Helpline: <strong>1091</strong></li>
+                        <li>Police Emergency: <strong>100</strong></li>
+                        <li>Domestic Abuse: <strong>181</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h2 style="margin-bottom: 20px;">Legal Rights Info</h2>
+                    <ul class="wellness-list">
+                        <li>Workplace Rights & Laws</li>
+                        <li>Legal Aid Resources</li>
+                        <li>Report Harassment</li>
+                    </ul>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h2 style="margin-bottom: 20px;">AI Safety Advisor</h2>
+                    <p style="margin-bottom: 20px;">Select your situation for immediate guidance:</p>
+                    
+                    <div class="safety-options">
+                        <div class="safety-option" data-situation="followed">
+                            <i class="fas fa-walking" style="font-size: 2rem; margin-bottom: 10px; color: var(--danger);"></i>
+                            <h3>Being followed</h3>
+                        </div>
+                        
+                        <div class="safety-option" data-situation="harassment">
+                            <i class="fas fa-briefcase" style="font-size: 2rem; margin-bottom: 10px; color: var(--warning);"></i>
+                            <h3>Workplace harassment</h3>
+                        </div>
+                        
+                        <div class="safety-option" data-situation="violence">
+                            <i class="fas fa-home" style="font-size: 2rem; margin-bottom: 10px; color: var(--danger);"></i>
+                            <h3>Domestic violence</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Career -->
+            <section id="career" class="main-content">
+                <h1>Career & Education</h1>
+                <p style="margin-bottom: 30px; color: var(--gray);">Grow your professional journey</p>
+                
+                <div class="card">
+                    <h2 style="margin-bottom: 20px;">Find a Mentor</h2>
+                    <p style="margin-bottom: 20px;">Connect with experienced professionals</p>
+                    
+                    <div class="mentor-cards">
+                        <div class="mentor-card">
+                            <div class="mentor-category">Tech Industry</div>
+                            <p>50+ mentors available</p>
+                            <button class="btn btn-primary" style="margin-top: 15px; width: 100%;">Browse</button>
+                        </div>
+                        
+                        <div class="mentor-card">
+                            <div class="mentor-category">Business & Finance</div>
+                            <p>35+ mentors available</p>
+                            <button class="btn btn-primary" style="margin-top: 15px; width: 100%;">Browse</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h2 style="margin-bottom: 20px;">Online Courses</h2>
+                    <p style="margin-bottom: 20px;">Free and paid learning resources</p>
+                    
+                    <div class="courses">
+                        <div class="course-item">
+                            <div>
+                                <h3>UI/UX Design Fundamentals</h3>
+                                <p>6 weeks - Beginner</p>
+                            </div>
+                            <button class="btn btn-primary">Enroll</button>
+                        </div>
+                        
+                        <div class="course-item">
+                            <div>
+                                <h3>Data Analysis with Python</h3>
+                                <p>8 weeks - Intermediate</p>
+                            </div>
+                            <button class="btn btn-primary">Enroll</button>
+                        </div>
+                        
+                        <div class="course-item">
+                            <div>
+                                <h3>Digital Marketing</h3>
+                                <p>4 weeks - Beginner</p>
+                            </div>
+                            <button class="btn btn-primary">Enroll</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h2 style="margin-bottom: 20px;">AI Career Guidance</h2>
+                    <div class="ai-suggestion">
+                        <strong>AI Suggestion:</strong>
+                        <p>"Based on your interest in technology and creativity, consider exploring UI/UX design or data analysis. Both fields offer excellent growth opportunities and remote work options."</p>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;">Get Personalized Guidance</button>
+                </div>
+            </section>
+
+           <!-- Complete Community Section -->
+<section id="community" class="main-content">
+    <h1>Community</h1>
+    <p style="margin-bottom: 30px; color: var(--gray);">Share · Support · Connect</p>
+    
+    <div class="post-form">
+        <h3>+ New Post</h3>
+        <textarea id="new-post" placeholder="Share your thoughts, ask for advice, or support others..."></textarea>
+        <div style="display: flex; justify-content: space-between;">
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">All</div>
+                <div class="category-tab" data-category="health">Health</div>
+                <div class="category-tab" data-category="career">Career</div>
+                <div class="category-tab" data-category="mental">Mental Wellness</div>
+            </div>
+            <button id="post-submit" class="btn btn-primary">Post</button>
+        </div>
+    </div>
+    
+    <div class="community-posts">
+        <div class="post">
+            <div class="post-header">
+                <div class="post-category">Mental Wellness</div>
+                <span>2h ago</span>
+            </div>
+            <p><strong>Anonymous User</strong></p>
+            <p>How do you handle work stress? I've been feeling overwhelmed lately and would love to hear your tips.</p>
+            <div class="post-actions">
+                <div class="post-action">
+                    <i class="fas fa-comment"></i>
+                    <span>12 Replies</span>
+                </div>
+                <div class="post-action">
+                    <i class="fas fa-heart"></i>
+                    <span>24 Support</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <div class="post-category">Career</div>
+                <span>5h ago</span>
+            </div>
+            <p><strong>Anonymous User</strong></p>
+            <p>Just got my first job offer! Thank you all for the resume tips and interview advice. This community is amazing! ❤️</p>
+            <div class="post-actions">
+                <div class="post-action">
+                    <i class="fas fa-comment"></i>
+                    <span>8 Replies</span>
+                </div>
+                <div class="post-action">
+                    <i class="fas fa-heart"></i>
+                    <span>45 Support</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="post">
+            <div class="post-header">
+                <div class="post-category">Health</div>
+                <span>1d ago</span>
+            </div>
+            <p><strong>Anonymous User</strong></p>
+            <p>What are your go-to self-care routines during your period? Looking for natural remedies.</p>
+            <div class="post-actions">
+                <div class="post-action">
+                    <i class="fas fa-comment"></i>
+                    <span>18 Replies</span>
+                </div>
+                <div class="post-action">
+                    <i class="fas fa-heart"></i>
+                    <span>31 Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 30px; background-color: rgba(6, 214, 160, 0.1); border-left: 4px solid var(--accent);">
+        <h3><i class="fas fa-shield-alt"></i> Safe Space</h3>
+        <p>This community is moderated, safe, and inclusive. All posts are anonymous and respectful dialogue is encouraged.</p>
+    </div>
+</section>
+
+<!-- Mood Check-in Section -->
+<section id="mood" class="main-content">
+    <h1>Mood Check-In</h1>
+    <p style="margin-bottom: 30px; color: var(--gray);">How are you feeling today?</p>
+    
+    <div class="card">
+        <h2>How are you feeling today?</h2>
+        <p style="margin-bottom: 20px;">Select the mood that best describes you</p>
+        
+        <div class="mood-options">
+            <div class="mood-option" data-mood="happy">
+                <div class="mood-emoji">🥰</div>
+                <div class="mood-text">Happy</div>
+            </div>
+            <div class="mood-option" data-mood="okay">
+                <div class="mood-emoji">😊</div>
+                <div class="mood-text">Okay</div>
+            </div>
+            <div class="mood-option" data-mood="low">
+                <div class="mood-emoji">😞</div>
+                <div class="mood-text">Low</div>
+            </div>
+            <div class="mood-option" data-mood="anxious">
+                <div class="mood-emoji">😡</div>
+                <div class="mood-text">Anxious</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 30px;">
+        <h2>Your Mood This Week</h2>
+        <div class="mood-chart">
+            <div class="mood-day">
+                <div class="day-emoji">😔</div>
+                <div class="day-name">Monday</div>
+            </div>
+            <div class="mood-day">
+                <div class="day-emoji">😕</div>
+                <div class="day-name">Tuesday</div>
+            </div>
+            <div class="mood-day">
+                <div class="day-emoji">😒</div>
+                <div class="day-name">Wednesday</div>
+            </div>
+            <div class="mood-day">
+                <div class="day-emoji">😑</div>
+                <div class="day-name">Thursday</div>
+            </div>
+            <div class="mood-day">
+                <div class="day-emoji">😓</div>
+                <div class="day-name">Friday</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 30px;">
+        <h2>Mental Wellness Resources</h2>
+        <ul class="wellness-list">
+            <li><i class="fas fa-star"></i> <strong>Guided Meditation</strong> (10 min)</li>
+            <li><i class="fas fa-book"></i> <strong>Journaling Prompts</strong></li>
+            <li><i class="fas fa-comments"></i> <strong>Talk to a Support Group</strong></li>
+            <li><i class="fas fa-phone-alt"></i> <strong>Mental Health Helpline</strong></li>
+        </ul>
+        <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">Access Resources</button>
+    </div>
+</section>
+
+<!-- Profile Section -->
+<section id="profile" class="main-content">
+    <div class="profile-header">
+        <div class="profile-info">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div>
+                <h2>user@example.com</h2>
+                <p>Member since Feb 2026</p>
+            </div>
+        </div>
+        
+        <div class="profile-stats">
+            <div class="profile-stat">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Posts</div>
+            </div>
+            <div class="profile-stat">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Streak</div>
+            </div>
+            <div class="profile-stat">
+                <div class="stat-number">28</div>
+                <div class="stat-label">Support</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="profile-menu">
+        <div class="menu-item" id="edit-profile">
+            <div>
+                <h3>Edit Profile</h3>
+                <p>Update your personal information</p>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <div class="menu-item" id="settings">
+            <div>
+                <h3>Settings</h3>
+                <p>App preferences and notifications</p>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <div class="menu-item" id="notifications">
+            <div>
+                <h3>Notifications</h3>
+                <p>Manage your alerts and reminders</p>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <div class="menu-item" id="privacy">
+            <div>
+                <h3>Privacy & Security</h3>
+                <p>Control your data and safety settings</p>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <div class="menu-item" id="help">
+            <div>
+                <h3>Help & Support</h3>
+                <p>FAQs and contact information</p>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <div class="menu-item" id="about">
+            <div>
+                <h3>About SAKHI+</h3>
+                <p>Version 2.1.0</p>
+            </div>
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 30px;">
+        <h3>Your Recent Activity</h3>
+        <ul class="wellness-list">
+            <li><i class="fas fa-heart" style="color: var(--secondary);"></i> Supported 3 community posts</li>
+            <li><i class="fas fa-comment" style="color: var(--info);"></i> Replied to 2 discussions</li>
+            <li><i class="fas fa-calendar-check" style="color: var(--accent);"></i> Completed 5 mood check-ins this week</li>
+            <li><i class="fas fa-book" style="color: var(--primary);"></i> Read 8 health articles</li>
+        </ul>
+    </div>
+</section>
+                           
+
+
+
+
+
+
+
+
+
+
+                            <script>
+    // DOM Elements
+    const authScreens = document.getElementById('auth-screens');
+    const mainApp = document.getElementById('main-app');
+    const landingScreen = document.getElementById('landing-screen');
+    const loginScreen = document.getElementById('login-screen');
+    const mainContentSections = document.querySelectorAll('.main-content');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const dashboardCards = document.querySelectorAll('.card[data-page]');
+    
+    // Authentication flow
+    document.getElementById('get-started-btn').addEventListener('click', () => {
+        landingScreen.style.display = 'none';
+        loginScreen.style.display = 'flex';
+    });
+    
+    document.getElementById('go-to-login').addEventListener('click', (e) => {
+        e.preventDefault();
+        landingScreen.style.display = 'none';
+        loginScreen.style.display = 'flex';
+    });
+    
+    document.getElementById('go-to-signup').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Sign up feature would open here. For demo, use Login button.');
+    });
+    
+    document.getElementById('back-to-landing').addEventListener('click', (e) => {
+        e.preventDefault();
+        loginScreen.style.display = 'none';
+        landingScreen.style.display = 'flex';
+    });
+    
+    document.getElementById('continue-guest').addEventListener('click', (e) => {
+        e.preventDefault();
+        authScreens.style.display = 'none';
+        mainApp.style.display = 'block';
+        showPage('dashboard');
+    });
+    
+    // Login functionality
+    document.getElementById('login-btn').addEventListener('click', () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        if (email && password) {
+            authScreens.style.display = 'none';
+            mainApp.style.display = 'block';
+            showPage('dashboard');
+            
+            // Update profile with email
+            document.querySelector('.profile-info h2').textContent = email;
+        } else {
+            alert('Please enter email and password');
+        }
+    });
+    
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        mainApp.style.display = 'none';
+        authScreens.style.display = 'block';
+        landingScreen.style.display = 'flex';
+        loginScreen.style.display = 'none';
+        
+        // Clear form
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+    });
+    
+    // Navigation between pages
+    function showPage(pageId) {
+        // Hide all pages
+        mainContentSections.forEach(section => {
+            section.classList.remove('active');
+            section.classList.remove('fade-in');
+        });
+        
+        // Show selected page
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
+            setTimeout(() => {
+                targetPage.classList.add('fade-in');
+            }, 10);
+        }
+        
+        // Update active nav link
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === pageId) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    // Add event listeners to nav links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pageId = link.getAttribute('data-page');
+            showPage(pageId);
+        });
+    });
+    
+    // Add event listeners to dashboard cards
+    dashboardCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const pageId = card.getAttribute('data-page');
+            showPage(pageId);
+        });
+    });
+    
+    // AI Assistant functionality
+    document.getElementById('ask-ai-btn').addEventListener('click', () => {
+        const question = document.getElementById('health-question').value;
+        const aiResponse = document.getElementById('ai-response');
+        
+        if (question.trim() === '') {
+            alert('Please enter a health question');
+            return;
+        }
+        
+        // Show loading state
+        aiResponse.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Thinking...';
+        
+        // Simulate AI response after delay
+        setTimeout(() => {
+            const responses = [
+                "Based on your question, I recommend staying hydrated, getting adequate rest, and consulting a healthcare professional if symptoms persist.",
+                "This is a common concern. Try practicing mindfulness for 10 minutes daily and maintain a balanced diet with regular exercise.",
+                "I understand your concern. While I can't provide medical advice, I suggest monitoring your symptoms and seeking professional help if they worsen.",
+                "For general wellness, consider establishing a consistent sleep schedule, managing stress through relaxation techniques, and maintaining regular physical activity."
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            aiResponse.innerHTML = `<strong>AI Response:</strong> ${randomResponse}`;
+            
+            // Clear input
+            document.getElementById('health-question').value = '';
+        }, 1500);
+    });
+    
+    // Allow pressing Enter to ask AI
+    document.getElementById('health-question').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            document.getElementById('ask-ai-btn').click();
+        }
+    });
+    
+    // SOS Emergency button
+    document.getElementById('sos-emergency').addEventListener('click', () => {
+        if (confirm('Are you sure you want to trigger emergency SOS? This will alert emergency contacts and services.')) {
+            alert('Emergency SOS activated! Help is on the way. Stay on the line.');
+            
+            // Show countdown
+            let countdown = 5;
+            const sosButton = document.getElementById('sos-emergency');
+            const originalText = sosButton.innerHTML;
+            
+            const countdownInterval = setInterval(() => {
+                sosButton.innerHTML = `<i class="fas fa-bell"></i> Emergency Alert Sent! ${countdown}`;
+                sosButton.style.backgroundColor = '#2a9d8f';
+                
+                if (countdown === 0) {
+                    clearInterval(countdownInterval);
+                    sosButton.innerHTML = originalText;
+                    sosButton.style.backgroundColor = '';
+                }
+                
+                countdown--;
+            }, 1000);
+        }
+    });
+    
+    // Safety advisor options
+    document.querySelectorAll('.safety-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const situation = option.getAttribute('data-situation');
+            let guidance = '';
+            
+            switch(situation) {
+                case 'followed':
+                    guidance = 'If you feel you are being followed: 1. Go to a crowded, well-lit area immediately. 2. Call emergency services (100) or women helpline (1091). 3. Share your live location with trusted contacts. 4. Do not go home if you think you are being followed.';
+                    break;
+                case 'harassment':
+                    guidance = 'For workplace harassment: 1. Document all incidents with dates and details. 2. Report to your HR department or supervisor. 3. Contact legal aid services for workplace rights. 4. Reach out to support groups for emotional assistance.';
+                    break;
+                case 'violence':
+                    guidance = 'In domestic violence situations: 1. Call the domestic abuse helpline (181) immediately. 2. Create a safety plan with an exit strategy. 3. Contact trusted friends or family. 4. Seek shelter at a safe location if needed.';
+                    break;
+            }
+            
+            alert(`Safety Guidance:\n\n${guidance}\n\nEmergency contacts: Police - 100, Women Helpline - 1091`);
+        });
+    });
+    
+    // Community post functionality
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            document.querySelectorAll('.category-tab').forEach(t => {
+                t.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            tab.classList.add('active');
+            
+            // In a real app, this would filter posts by category
+            alert(`Filtering posts by: ${tab.textContent}`);
+        });
+    });
+    
+    // Post action buttons (like, reply)
+    document.querySelectorAll('.post-action').forEach(action => {
+        action.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const actionType = action.querySelector('span').textContent;
+            const post = action.closest('.post');
+            const postTitle = post.querySelector('p').textContent.substring(0, 50) + '...';
+            
+            if (actionType.includes('Support')) {
+                let count = parseInt(action.querySelector('span').textContent);
+                count++;
+                action.querySelector('span').textContent = count + ' Support';
+                action.style.color = 'var(--secondary)';
+            } else if (actionType.includes('Replies')) {
+                alert(`You can view or add replies to: "${postTitle}"`);
+            }
+        });
+    });
+    
+    // Mood tracker functionality
+    const moodOptions = document.querySelectorAll('.mood-option');
+    const moodDays = document.querySelectorAll('.mood-day');
+    
+    moodOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove selected class from all options
+            moodOptions.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            option.classList.add('selected');
+            
+            // Get mood emoji
+            const moodEmoji = option.querySelector('.mood-emoji').textContent;
+            const moodText = option.querySelector('.mood-text').textContent;
+            
+            // Update today's mood
+            const today = new Date().getDay();
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            
+            alert(`Thank you for checking in! Your mood today (${dayNames[today]}): ${moodText} ${moodEmoji}\n\nThis helps us provide better mental wellness support.`);
+            
+            // Update mood chart for today
+            if (today >= 1 && today <= 5) { // Monday to Friday
+                const dayIndex = today - 1; // 0 for Monday
+                if (dayIndex < moodDays.length) {
+                    moodDays[dayIndex].querySelector('.day-emoji').textContent = moodEmoji;
+                }
+            }
+        });
+    });
+    
+    // Initialize with dashboard page
+    window.addEventListener('DOMContentLoaded', () => {
+        // Set default values
+        const today = new Date();
+        const nextPeriod = new Date(today);
+        nextPeriod.setDate(nextPeriod.getDate() + 28); // 28 days from now
+        
+        document.getElementById('next-period').textContent = nextPeriod.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+        
+        // Set today's date for last period update
+        document.getElementById('last-period').addEventListener('click', () => {
+            const newDate = prompt('Update last period date (e.g., Feb 5, 2026):', 'Feb 5, 2026');
+            if (newDate) {
+                document.getElementById('last-period').textContent = newDate;
+                
+                // Update next period date (28 days later)
+                const dateParts = newDate.replace(',', '').split(' ');
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const monthIndex = monthNames.indexOf(dateParts[0]);
+                const day = parseInt(dateParts[1]);
+                const year = parseInt(dateParts[2]);
+                
+                if (monthIndex !== -1) {
+                    const lastPeriodDate = new Date(year, monthIndex, day);
+                    const nextPeriodDate = new Date(lastPeriodDate);
+                    nextPeriodDate.setDate(nextPeriodDate.getDate() + 28);
+                    
+                    document.getElementById('next-period').textContent = nextPeriodDate.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                }
+            }
+        });
+        
+        // Update cycle length
+        document.getElementById('cycle-length').addEventListener('click', () => {
+            const newLength = prompt('Update cycle length (in days):', '28');
+            if (newLength && !isNaN(newLength)) {
+                document.getElementById('cycle-length').textContent = newLength + ' days';
+            }
+        });
+        
+        // Add fade-in animation to all cards
+        document.querySelectorAll('.card').forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('fade-in');
+            }, index * 100);
+        });
+    });
+    // Community post submission
+document.getElementById('post-submit').addEventListener('click', () => {
+    const postText = document.getElementById('new-post').value;
+    
+    if (postText.trim() === '') {
+        alert('Please write something to post');
+        return;
+    }
+    
+    // Get active category
+    const activeCategory = document.querySelector('.category-tab.active').textContent;
+    
+    // Create new post element
+    const communityPosts = document.querySelector('.community-posts');
+    const newPost = document.createElement('div');
+    newPost.className = 'post';
+    newPost.innerHTML = `
+        <div class="post-header">
+            <div class="post-category">${activeCategory}</div>
+            <span>Just now</span>
+        </div>
+        <p><strong>You</strong></p>
+        <p>${postText}</p>
+        <div class="post-actions">
+            <div class="post-action">
+                <i class="fas fa-comment"></i>
+                <span>0 Replies</span>
+            </div>
+            <div class="post-action">
+                <i class="fas fa-heart"></i>
+                <span>0 Support</span>
+            </div>
+        </div>
+    `;
+    
+    // Add to top of posts
+    communityPosts.prepend(newPost);
+    
+    // Clear textarea
+    document.getElementById('new-post').value = '';
+    
+    // Update post count in profile
+    const postCount = document.querySelector('.profile-stat:first-child .stat-number');
+    postCount.textContent = parseInt(postCount.textContent) + 1;
+    
+    alert('Your post has been shared with the community!');
+    
+    // Add event listeners to new post actions
+    newPost.querySelectorAll('.post-action').forEach(action => {
+        action.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const actionType = action.querySelector('span').textContent;
+            
+            if (actionType.includes('Support')) {
+                let count = parseInt(action.querySelector('span').textContent);
+                count++;
+                action.querySelector('span').textContent = count + ' Support';
+                action.style.color = 'var(--secondary)';
+                
+                // Update support count in profile
+                const supportCount = document.querySelector('.profile-stat:last-child .stat-number');
+                supportCount.textContent = parseInt(supportCount.textContent) + 1;
+            } else if (actionType.includes('Replies')) {
+                alert('Reply feature would open here');
+            }
+        });
+    });
+});
+
+// Category tabs filtering (simplified for demo)
+document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        document.querySelectorAll('.category-tab').forEach(t => {
+            t.classList.remove('active');
+        });
+        
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        const category = tab.getAttribute('data-category');
+        const posts = document.querySelectorAll('.post');
+        
+        if (category === 'all') {
+            posts.forEach(post => post.style.display = 'block');
+        } else {
+            posts.forEach(post => {
+                const postCategory = post.querySelector('.post-category').textContent.toLowerCase();
+                if (postCategory.includes(category)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+    });
+});
+
+// Profile menu items functionality
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const id = item.id;
+        let message = '';
+        
+        switch(id) {
+            case 'edit-profile':
+                message = 'Edit Profile: You can update your name, email, profile picture, and personal details here.';
+                break;
+            case 'settings':
+                message = 'Settings: Configure app preferences, language, theme, and general settings.';
+                break;
+            case 'notifications':
+                message = 'Notifications: Manage push notifications, email alerts, and reminder settings.';
+                break;
+            case 'privacy':
+                message = 'Privacy & Security: Control data sharing, manage connected devices, and security settings.';
+                break;
+            case 'help':
+                message = 'Help & Support: Access FAQ, contact support team, or report an issue.';
+                break;
+            case 'about':
+                message = 'About SAKHI+ v2.1.0: Your digital companion for health, safety & growth.';
+                break;
+        }
+        
+        alert(message);
+    });
+});
+
+// Edit profile avatar
+document.querySelector('.profile-avatar').addEventListener('click', () => {
+    const colors = ['#8a2be2', '#f72585', '#06d6a0', '#4cc9f0', '#f4a261'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    document.querySelector('.profile-avatar').style.backgroundColor = randomColor;
+});
+
+// Update streak in profile
+function updateStreak() {
+    const streakElement = document.querySelector('.profile-stat:nth-child(2) .stat-number');
+    let currentStreak = parseInt(streakElement.textContent);
+    
+    // Check if user already checked in today
+    const lastCheckin = localStorage.getItem('lastMoodCheckin');
+    const today = new Date().toDateString();
+    
+    if (lastCheckin !== today) {
+        // Increment streak if not checked in today
+        streakElement.textContent = currentStreak + 1;
+        localStorage.setItem('lastMoodCheckin', today);
+    }
+}
+
+// Enhanced mood tracker functionality
+document.querySelectorAll('.mood-option').forEach(option => {
+    option.addEventListener('click', () => {
+        // Remove selected class from all options
+        document.querySelectorAll('.mood-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        option.classList.add('selected');
+        
+        // Get mood data
+        const mood = option.getAttribute('data-mood');
+        const moodEmoji = option.querySelector('.mood-emoji').textContent;
+        const moodText = option.querySelector('.mood-text').textContent;
+        
+        // Update today's mood in the chart
+        const today = new Date().getDay();
+        const dayIndex = today - 1; // 0 for Monday
+        
+        if (dayIndex >= 0 && dayIndex <= 4) { // Monday to Friday
+            const moodDays = document.querySelectorAll('.mood-day');
+            if (dayIndex < moodDays.length) {
+                moodDays[dayIndex].querySelector('.day-emoji').textContent = moodEmoji;
+                
+                // Save to localStorage
+                const weekMoods = JSON.parse(localStorage.getItem('weekMoods') || '{}');
+                weekMoods[dayIndex] = {emoji: moodEmoji, text: moodText, mood: mood};
+                localStorage.setItem('weekMoods', JSON.stringify(weekMoods));
+            }
+        }
+        
+        // Update streak
+        updateStreak();
+        
+        // Show resources based on mood
+        let resourceMessage = '';
+        if (mood === 'low' || mood === 'anxious') {
+            resourceMessage = '\n\nI see you\'re feeling down. Would you like to access our mental wellness resources?';
+        }
+        
+        alert(`Thank you for checking in! You selected: ${moodText} ${moodEmoji}${resourceMessage}`);
+    });
+});
+
+// Load saved moods from localStorage on page load
+window.addEventListener('DOMContentLoaded', function() {
+    // Load week moods
+    const weekMoods = JSON.parse(localStorage.getItem('weekMoods') || '{}');
+    Object.keys(weekMoods).forEach(dayIndex => {
+        const moodDays = document.querySelectorAll('.mood-day');
+        if (moodDays[dayIndex]) {
+            moodDays[dayIndex].querySelector('.day-emoji').textContent = weekMoods[dayIndex].emoji;
+        }
+    });
+    
+    // Set up mood resources button
+    document.querySelector('#mood .btn-primary').addEventListener('click', function() {
+        const resources = [
+            "Guided Meditation: A 10-minute session to calm your mind",
+            "Journaling Prompts: Writing exercises for self-reflection",
+            "Support Groups: Connect with others who understand",
+            "Mental Health Helpline: Professional support available 24/7",
+            "Breathing Exercises: 5-minute techniques for anxiety relief",
+            "Sleep Stories: Audio stories to help you relax and sleep better"
+        ];
+        
+        let resourcesList = "Available Mental Wellness Resources:\n\n";
+        resources.forEach((resource, index) => {
+            resourcesList += `${index + 1}. ${resource}\n`;
+        });
+        
+        alert(resourcesList);
+    });
+});
+</script>
